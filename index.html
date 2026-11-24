@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090909">
+<title>FLIXORA - Short Drama</title>
+<meta name="description" content="FLIXORA - Tonton koleksi drama pendek terbaru.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#090909;
+  --surface:#141414;
+  --surface2:#1c1a16;
+  --gold:#d6b879;
+  --gold2:#f2d9a0;
+  --text:#f5f1e8;
+  --muted:#99938a;
+  --border:rgba(214,184,121,.18);
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'DM Sans',sans-serif;
+  min-height:100vh;
+}
+
+button{
+  font-family:inherit;
+  cursor:pointer;
+}
+
+button:focus-visible{
+  outline:2px solid var(--gold);
+  outline-offset:3px;
+}
+
+.app{
+  width:100%;
+  max-width:1100px;
+  margin:auto;
+  padding-bottom:90px;
+}
+
+/* HEADER */
+.header{
+  height:68px;
+  padding:0 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(9,9,9,.96);
+  backdrop-filter:blur(12px);
+}
+
+.logo{
+  font-family:'Playfair Display',serif;
+  font-size:27px;
+  font-weight:800;
+  letter-spacing:2px;
+  color:var(--gold2);
+}
+
+.logo span{
+  color:#fff;
+}
+
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.header-btn{
+  background:none;
+  border:0;
+  color:var(--gold);
+  font-size:21px;
+  padding:5px;
+}
+
+/* HERO */
+.hero{
+  padding:30px 20px 24px;
+}
+
+.hero-label{
+  color:var(--gold);
+  font-size:10px;
+  letter-spacing:3px;
+  font-weight:800;
+  margin-bottom:10px;
+}
+
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(27px,5vw,43px);
+  line-height:1.2;
+  max-width:650px;
+}
+
+.hero h1 span{
+  color:var(--gold);
+}
+
+.hero p{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.7;
+  margin-top:12px;
+  max-width:520px;
+}
+
+/* SECTION */
+.section{
+  padding:10px 20px 25px;
+}
+
+.section-heading{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:17px;
+}
+
+.section-heading h2{
+  font-family:'Playfair Display',serif;
+  font-size:21px;
+  color:var(--gold2);
+}
+
+.section-heading span{
+  color:var(--muted);
+  font-size:11px;
+}
+
+/* SEARCH */
+.search-wrap{
+  padding:0 20px 20px;
+  display:none;
+}
+
+.search-wrap.active{
+  display:block;
+}
+
+.search-input{
+  width:100%;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:13px 15px;
+  color:#fff;
+  font-size:14px;
+  outline:none;
+}
+
+.search-input:focus{
+  border-color:var(--gold);
+}
+
+/* DRAMA GRID */
+.drama-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:20px 15px;
+}
+
+.drama-card{
+  min-width:0;
+  cursor:pointer;
+  position:relative;
+}
+
+.poster{
+  width:100%;
+  aspect-ratio:2/3;
+  border-radius:10px;
+  overflow:hidden;
+  position:relative;
+  background:
+    radial-gradient(circle at 50% 30%,#51452e,#211d16 48%,#101010 100%);
+  border:1px solid rgba(214,184,121,.2);
+}
+
+.poster img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.poster-placeholder{
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  padding:12px;
+  text-align:center;
+  color:var(--gold2);
+}
+
+.poster-placeholder .symbol{
+  font-size:35px;
+  margin-bottom:12px;
+}
+
+.poster-placeholder strong{
+  font-family:'Playfair Display',serif;
+  font-size:15px;
+  line-height:1.4;
+}
+
+.poster-placeholder small{
+  margin-top:8px;
+  font-size:9px;
+  letter-spacing:2px;
+  color:var(--gold);
+}
+
+.poster-tag{
+  position:absolute;
+  top:8px;
+  left:8px;
+  background:var(--gold);
+  color:#17130b;
+  padding:4px 7px;
+  border-radius:4px;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:.5px;
+}
+
+.card-info{
+  padding:10px 2px 0;
+}
+
+.card-info h3{
+  font-size:13px;
+  font-weight:700;
+  line-height:1.45;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+
+.card-meta{
+  color:var(--muted);
+  font-size:10px;
+  margin-top:6px;
+}
+
+/* DETAIL PAGE */
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+.back-row{
+  padding:18px 20px;
+}
+
+.back-btn{
+  background:none;
+  border:0;
+  color:var(--gold);
+  font-size:13px;
+  font-weight:700;
+}
+
+.detail-top{
+  display:grid;
+  grid-template-columns:190px 1fr;
+  gap:22px;
+  padding:0 20px 25px;
+}
+
+.detail-poster{
+  width:100%;
+  aspect-ratio:2/3;
+  border-radius:10px;
+  overflow:hidden;
+  background:var(--surface2);
+  border:1px solid var(--border);
+}
+
+.detail-poster img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.detail-poster .poster-placeholder{
+  height:100%;
+}
+
+.detail-info{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.detail-label{
+  color:var(--gold);
+  font-size:10px;
+  letter-spacing:2px;
+  font-weight:800;
+  margin-bottom:9px;
+}
+
+.detail-info h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(22px,4vw,32px);
+  line-height:1.25;
+}
+
+.detail-meta{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:12px;
+}
+
+.detail-genre{
+  display:inline-block;
+  width:max-content;
+  margin-top:12px;
+  padding:5px 10px;
+  border:1px solid var(--border);
+  border-radius:20px;
+  color:var(--gold);
+  font-size:10px;
+}
+
+.detail-synopsis{
+  padding:0 20px 25px;
+}
+
+.detail-synopsis h3,
+.episode-heading h3{
+  font-family:'Playfair Display',serif;
+  color:var(--gold2);
+  font-size:19px;
+  margin-bottom:10px;
+}
+
+.detail-synopsis p{
+  color:#b5afa4;
+  font-size:13px;
+  line-height:1.8;
+}
+
+/* EPISODES */
+.episode-section{
+  padding:0 20px 30px;
+}
+
+.episode-heading{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:15px;
+}
+
+.episode-heading span{
+  font-size:11px;
+  color:var(--muted);
+}
+
+.episode-grid{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:9px;
+}
+
+.episode-btn{
+  min-height:43px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:7px;
+  color:#d7d0c4;
+  font-size:12px;
+  font-weight:700;
+  transition:.2s;
+}
+
+.episode-btn:hover,
+.episode-btn.selected{
+  background:var(--gold);
+  color:#17130b;
+  border-color:var(--gold);
+}
+
+/* WATCH PAGE */
+.watch-section{
+  padding:0 20px 30px;
+}
+
+.player-title{
+  font-family:'Playfair Display',serif;
+  color:var(--gold2);
+  font-size:22px;
+  margin-bottom:14px;
+}
+
+.player-frame{
+  width:100%;
+  aspect-ratio:16/9;
+  background:#000;
+  border:1px solid var(--border);
+  border-radius:10px;
+  overflow:hidden;
+  position:relative;
+}
+
+.player-frame iframe{
+  width:100%;
+  height:100%;
+  border:0;
+  display:block;
+}
+
+.player-placeholder{
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  text-align:center;
+  padding:20px;
+  color:var(--gold);
+}
+
+.player-placeholder .play-icon{
+  width:58px;
+  height:58px;
+  border:1px solid var(--gold);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:23px;
+  margin-bottom:14px;
+}
+
+.player-placeholder strong{
+  font-size:15px;
+}
+
+.player-placeholder p{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:8px;
+}
+
+.watch-controls{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:15px;
+}
+
+.watch-control-btn{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:7px;
+  color:var(--gold);
+  padding:10px 15px;
+  font-size:12px;
+  font-weight:700;
+}
+
+.watch-control-btn:disabled{
+  opacity:.35;
+  cursor:not-allowed;
+}
+
+/* BOTTOM NAV */
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  z-index:60;
+  background:rgba(12,12,12,.97);
+  border-top:1px solid var(--border);
+  display:flex;
+  justify-content:center;
+  backdrop-filter:blur(12px);
+}
+
+.nav-inner{
+  width:100%;
+  max-width:600px;
+  display:flex;
+  justify-content:space-around;
+  padding:10px 10px calc(10px + env(safe-area-inset-bottom));
+}
+
+.nav-btn{
+  background:none;
+  border:0;
+  color:var(--muted);
+  display:flex;
+  align-items:center;
+  flex-direction:column;
+  gap:4px;
+  font-size:10px;
+  min-width:60px;
+}
+
+.nav-btn .nav-icon{
+  font-size:19px;
+}
+
+.nav-btn.active{
+  color:var(--gold);
+}
+
+/* EMPTY */
+.empty-message{
+  grid-column:1/-1;
+  text-align:center;
+  color:var(--muted);
+  padding:35px 10px;
+  font-size:13px;
+}
+
+/* FOOTER */
+.footer{
+  text-align:center;
+  padding:25px 20px;
+  color:#716b60;
+  font-size:10px;
+  letter-spacing:.5px;
+  border-top:1px solid var(--border);
+  margin-top:10px;
+}
+
+@media(max-width:650px){
+  .drama-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:18px 12px;
+  }
+
+  .detail-top{
+    grid-template-columns:125px 1fr;
+    gap:15px;
+  }
+
+  .detail-info h1{
+    font-size:21px;
+  }
+
+  .episode-grid{
+    grid-template-columns:repeat(4,minmax(0,1fr));
+  }
+
+  .hero{
+    padding-top:25px;
+  }
+}
+
+@media(min-width:900px){
+  .drama-grid{
+    grid-template-columns:repeat(4,minmax(0,1fr));
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">FLIX<span>ORA</span></div>
+    <div class="header-right">
+      <button class="header-btn" onclick="toggleSearch()" aria-label="Cari drama">⌕</button>
+    </div>
+  </header>
+
+  <!-- SEARCH -->
+  <div class="search-wrap" id="searchWrap">
+    <input
+      type="search"
+      class="search-input"
+      id="searchInput"
+      placeholder="Cari judul drama..."
+      oninput="searchDramas()"
+    >
+  </div>
+
+  <!-- HOME PAGE -->
+  <main class="page active" id="homePage">
+
+    <section class="hero">
+      <div class="hero-label">WELCOME TO FLIXORA</div>
+      <h1>Temukan Cerita, <span>Rasakan Emosinya.</span></h1>
+      <p>
+        Nikmati koleksi drama pendek pilihan dengan berbagai kisah
+        romantis, konflik, dan kejutan yang menarik.
+      </p>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <h2>Drama Pilihan</h2>
+        <span id="dramaCount">6 Drama</span>
+      </div>
+
+      <div class="drama-grid" id="dramaGrid"></div>
+    </section>
+
+    <footer class="footer">
+      © 2026 FLIXORA · SHORT DRAMA COLLECTION
+    </footer>
+
+  </main>
+
+  <!-- DETAIL PAGE -->
+  <main class="page" id="detailPage">
+
+    <div class="back-row">
+      <button class="back-btn" onclick="goHome()">← Kembali ke Beranda</button>
+    </div>
+
+    <section class="detail-top">
+      <div class="detail-poster" id="detailPoster"></div>
+
+      <div class="detail-info">
+        <div class="detail-label">FLIXORA ORIGINAL COLLECTION</div>
+        <h1 id="detailTitle"></h1>
+        <div class="detail-meta" id="detailMeta"></div>
+        <div class="detail-genre" id="detailGenre"></div>
+      </div>
+    </section>
+
+    <section class="detail-synopsis">
+      <h3>Sinopsis</h3>
+      <p id="detailSynopsis"></p>
+    </section>
+
+    <section class="episode-section">
+      <div class="episode-heading">
+        <h3>Daftar Episode</h3>
+        <span id="episodeCount"></span>
+      </div>
+
+      <div class="episode-grid" id="episodeGrid"></div>
+    </section>
+
+  </main>
+
+  <!-- WATCH PAGE -->
+  <main class="page" id="watchPage">
+
+    <div class="back-row">
+      <button class="back-btn" onclick="backToDetail()">← Kembali ke Episode</button>
+    </div>
+
+    <section class="watch-section">
+      <h2 class="player-title" id="playerTitle">Memuat episode...</h2>
+
+      <div class="player-frame" id="playerFrame">
+        <div class="player-placeholder">
+          <div class="play-icon">▶</div>
+          <strong>FLIXORA PLAYER</strong>
+          <p>Pilih episode untuk mulai menonton.</p>
+        </div>
+      </div>
+
+      <div class="watch-controls">
+        <button class="watch-control-btn" id="prevEpisode" onclick="changeEpisode(-1)">
+          ← Episode Sebelumnya
+        </button>
+
+        <button class="watch-control-btn" id="nextEpisode" onclick="changeEpisode(1)">
+          Episode Berikutnya →
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <div class="nav-inner">
+    <button class="nav-btn active" onclick="goHome()">
+      <span class="nav-icon">⌂</span>
+      <span>Beranda</span>
+    </button>
+
+    <button class="nav-btn" onclick="toggleSearch()">
+      <span class="nav-icon">⌕</span>
+      <span>Cari</span>
+    </button>
+
+    <button class="nav-btn" onclick="showLatest()">
+      <span class="nav-icon">✦</span>
+      <span>Drama</span>
+    </button>
+  </div>
+</nav>
+
+<script>
+/* ==========================================
+   1. DIRECT LINK CONFIGURATION
+========================================== */
+
+const DIRECT_LINK =
+"https://emotionallytonightintelligent.com/bwuq2bmay8?key=64b01feeb25c6433602effa9db70338d";
+
+function openDirectLink(){
+  const newTab = window.open(DIRECT_LINK, "_blank");
+
+  if(newTab){
+    newTab.opener = null;
+  }
+}
+
+
+/* ==========================================
+   2. DRAMA DATABASE
+
+   EDIT DATA DRAMA DI BAGIAN INI.
+
+   image       = URL poster drama
+   title       = Judul drama
+   genre       = Genre drama
+   year        = Tahun drama
+   synopsis    = Sinopsis drama
+   totalEpisodes = Jumlah episode
+   videos      = URL video setiap episode
+
+   Urutan videos:
+   videos[0] = Episode 1
+   videos[1] = Episode 2
+   videos[2] = Episode 3
+   dan seterusnya.
+
+   Kosongkan URL jika video belum tersedia.
+========================================== */
+
+const dramas = [
+
+  {
+    id:1,
+    title:"Cinta di Balik Takdir",
+    genre:"Romance",
+    year:2026,
+    image:"https://i.ibb.co/S7nhhsXB/Gemini-Generated-Image-9iamna9iamna9iam.jpg",
+    synopsis:"Sebuah kisah cinta yang penuh rahasia, pertemuan tak terduga, dan perjalanan takdir yang mengubah kehidupan dua insan.",
+    totalEpisodes:60,    
+    videos:[
+  "https://vidara.to/e/4w56YH9mdPo3K",
+  "https://vidara.to/e/XDBRSKBmQ1WJH",
+  "https://vidara.to/e/XYRjWpT2kEWru",
+  "https://vidara.to/e/z7NbQPXeGBp4V"
+]
+
+  },
+
+  {
+    id:2,
+    title:"Menantu Sampah Ini Ternyata Raja Pedang Tiada Tanding!",
+    genre:"Action Romance",
+    year:2026,
+    image:"https://i.ibb.co/23QPGWYQ/Gemini-Generated-Image-x7hnmwx7hnmwx7hn.jpg",
+    synopsis:"Di balik penghinaan tersebut, ia menyimpan identitas rahasia yang mengejutkan sebagai seorang pendekar legendaris—Sang Raja Pedang Tiada Tanding yang menguasai teknik pedang tingkat dewa.",
+    totalEpisodes:57,   
+    videos:[
+  "https://vidara.to/e/Kmr7KISRhE5QW",
+  "https://vidara.to/e/r4o1NlAUybToU",
+  "https://vidara.to/e/XfAurKQJxoiIS"
+]
+
+  },
+
+  {
+    id:3,
+    title:"Dibully miskin, 100 Helikopter Mengepung Sekolah Saat Identitasnya Terbongkar.",
+    genre:"Romance",
+    year:2026,
+    image:"https://i.ibb.co/PZXTCfHV/Gemini-Generated-Image-9iuw2t9iuw2t9iuw.jpg",
+    synopsis:"Di balik penampilannya yang tampak sederhana dan tumpukan buku belajarnya, ia sebenarnya adalah pewaris tunggal dari keluarga konglomerat super kaya raya yang menyembunyikan status aslinya.",
+    totalEpisodes:44,
+    videos:[
+  "https://vidara.to/e/No1oTjMCL7wMo",
+  "https://vidara.to/e/V3BD1nsClaSZp",
+  "https://vidara.to/e/M8HwQseaegaHV"
+]
+
+  },
+
+  {
+    id:4,
+    title:"Menyelamatkan CEO Cantik Saat Bencana",
+    genre:"Action Drama",
+    year:2026,
+    image:"https://i.ibb.co/tpgc0JbK/Gemini-Generated-Image-f8ho2lf8ho2lf8ho.jpg",
+    synopsis:"Seorang CEO wanita bergaun perak yang elegan terjebak di tengah kekacauan tersebut dan menjadi target utama para penjahat. Di saat bersamaan, seorang agen taktis sekaligus pengawal elit yang tangguh (bersama pasukan khusus dan helikopter militer) datang tepat waktu untuk memimpin misi penyelamatan.",
+    totalEpisodes:57,
+    videos:[
+  "https://vidara.to/e/DRFUg9nl4Cm5K",
+  "https://vidara.to/e/8pNlo9CVfD9yZ",
+  "https://vidara.to/e/zTXQo55hGM1Vu",
+  "https://vidara.to/e/lGPpnFm03ug0F"
+]
+
+  },
+
+  {
+    id:5,
+    title:"Kembalinya Sang Kesatria Naga Legendaris",
+    genre:"Action / Adventure",
+    year:2026,
+    image:"https://i.ibb.co/mrs9ZLMc/Gemini-Generated-Image-t5sg4wt5sg4wt5sg.jpg",
+    synopsis:"Ketika kegelapan kembali mengancam dunia dan musuh-musuh mengira kekuatan kuno telah punah, sang ksatria naga legendaris kembali menampakkan diri",
+    totalEpisodes:71,
+    videos:[
+  "https://vidara.to/e/8OWLojSj44E4p",
+  "https://vidara.to/e/tnh0Md2VRwS99",
+  "https://vidara.to/e/UZLg4NwWjHMJJ",
+  "https://vidara.to/e/hahw2l0J9jyrZ",
+  "https://vidara.to/e/kTRvp8bfGUrae"
+]
+
+  },
+
+  {
+    id:6,
+    title:"Pewaris yang Terbuang Kini Jadi Penyihir Terhebat",
+    genre:"Action Fantasy",
+    year:2026,
+    image:"https://i.ibb.co/S7MHS6K7/Gemini-Generated-Image-hq64olhq64olhq64.jpg",
+    synopsis:"Dalam pengasingannya, ia menemukan artefak kuno berupa lentera misterius dan jubah berpola rune yang membangkitkan potensi sihir tersembunyi di dalam dirinya.",
+    totalEpisodes:66,
+    videos:[
+  "https://vidara.to/e/GvI5HKT36vqsJ",
+  "https://vidara.to/e/dAVtP7Jm8btKm",
+  "https://vidara.to/e/FLImIxaDwGMN4",
+  "https://vidara.to/e/IpcjKAc3kuHwK",
+  "https://vidara.to/e/SJqZE4LSvRwUI"
+]
+
+  }
+
+];
+
+
+/* ==========================================
+   3. APP STATE
+========================================== */
+
+let currentDrama = null;
+let currentEpisode = 1;
+
+
+/* ==========================================
+   4. HELPER FUNCTIONS
+========================================== */
+
+function getDrama(id){
+  return dramas.find(drama => drama.id === id);
+}
+
+function getVideoURL(drama, number){
+  if(!drama.videos || !drama.videos[number - 1]){
+    return "";
+  }
+
+  return String(drama.videos[number - 1]).trim();
+}
+
+function posterContent(drama){
+  if(drama.image && drama.image.trim() !== ""){
+    return `
+      <img
+        src="${escapeHTML(drama.image)}"
+        alt="${escapeHTML(drama.title)}"
+        loading="lazy"
+      >
+    `;
+  }
+
+  return `
+    <div class="poster-placeholder">
+      <div class="symbol">✦</div>
+      <strong>${escapeHTML(drama.title)}</strong>
+      <small>FLIXORA ORIGINAL</small>
+    </div>
+  `;
+}
+
+function escapeHTML(value){
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  })[char]);
+}
+
+
+/* ==========================================
+   5. RENDER HOME
+========================================== */
+
+function renderDramas(list = dramas){
+
+  const grid = document.getElementById("dramaGrid");
+
+  grid.innerHTML = "";
+
+  document.getElementById("dramaCount").textContent =
+    list.length + " Drama";
+
+  if(list.length === 0){
+    grid.innerHTML = `
+      <div class="empty-message">
+        Drama tidak ditemukan.
+      </div>
+    `;
+    return;
+  }
+
+  list.forEach(drama => {
+
+    const card = document.createElement("div");
+    card.className = "drama-card";
+
+    card.innerHTML = `
+      <div class="poster">
+        ${posterContent(drama)}
+        <div class="poster-tag">NEW</div>
+      </div>
+
+      <div class="card-info">
+        <h3>${escapeHTML(drama.title)}</h3>
+        <div class="card-meta">
+          ${escapeHTML(drama.genre)} · ${escapeHTML(drama.year)}
+        </div>
+      </div>
+    `;
+
+    card.addEventListener("click", function(){
+
+      // Setiap poster memicu Direct Link
+      openDirectLink();
+
+      // Halaman FLIXORA tetap membuka detail drama
+      showDetail(drama.id);
+
+    });
+
+    grid.appendChild(card);
+
+  });
+
+}
+
+
+/* ==========================================
+   6. PAGE NAVIGATION
+========================================== */
+
+function showPage(pageId){
+
+  document.querySelectorAll(".page").forEach(page => {
+    page.classList.remove("active");
+  });
+
+  document.getElementById(pageId).classList.add("active");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+  updateNavigation(pageId);
+}
+
+function updateNavigation(pageId){
+
+  const buttons = document.querySelectorAll(".nav-btn");
+
+  buttons.forEach(button => {
+    button.classList.remove("active");
+  });
+
+  if(pageId === "homePage"){
+    buttons[0].classList.add("active");
+  }
+
+  if(pageId === "detailPage" || pageId === "watchPage"){
+    buttons[2].classList.add("active");
+  }
+
+}
+
+function goHome(){
+
+  showPage("homePage");
+
+  document.getElementById("searchWrap").classList.remove("active");
+
+}
+
+function showLatest(){
+
+  goHome();
+
+  renderDramas(dramas);
+
+}
+
+
+/* ==========================================
+   7. DRAMA DETAIL
+========================================== */
+
+function showDetail(id){
+
+  const drama = getDrama(id);
+
+  if(!drama) return;
+
+  currentDrama = id;
+  currentEpisode = 1;
+
+  document.getElementById("detailPoster").innerHTML =
+    posterContent(drama);
+
+  document.getElementById("detailTitle").textContent =
+    drama.title;
+
+  document.getElementById("detailMeta").textContent =
+    drama.year + " · " + drama.totalEpisodes + " Episode";
+
+  document.getElementById("detailGenre").textContent =
+    drama.genre;
+
+  document.getElementById("detailSynopsis").textContent =
+    drama.synopsis;
+
+  document.getElementById("episodeCount").textContent =
+    drama.totalEpisodes + " Episode";
+
+  renderEpisodes(drama);
+
+  showPage("detailPage");
+
+}
+
+
+/* ==========================================
+   8. EPISODE LIST
+========================================== */
+
+function renderEpisodes(drama){
+
+  const grid = document.getElementById("episodeGrid");
+
+  grid.innerHTML = "";
+
+  for(let i = 1; i <= drama.totalEpisodes; i++){
+
+    const button = document.createElement("button");
+
+    button.className = "episode-btn";
+    button.textContent = "EP " + i;
+
+    button.addEventListener("click", function(){
+
+      playEpisode(i);
+
+    });
+
+    grid.appendChild(button);
+
+  }
+
+}
+
+
+/* ==========================================
+   9. PLAY EPISODE
+
+   PENTING:
+   openDirectLink() dijalankan sebelum
+   pengecekan URL video.
+
+   Jadi SEMUA episode memicu Direct Link,
+   termasuk episode yang belum mempunyai video.
+========================================== */
+
+function playEpisode(number){
+
+  const drama = getDrama(currentDrama);
+
+  if(!drama) return;
+
+  if(number < 1 || number > drama.totalEpisodes) return;
+
+  // SEMUA EPISODE MEMICU DIRECT LINK
+  openDirectLink();
+
+  currentEpisode = number;
+
+  const videoURL = getVideoURL(drama, number);
+
+  document.getElementById("playerTitle").textContent =
+    drama.title + " - Episode " + number;
+
+  const player = document.getElementById("playerFrame");
+
+  if(videoURL !== ""){
+
+    player.innerHTML = `
+      <iframe
+        src="${escapeHTML(videoURL)}"
+        allow="autoplay; fullscreen; picture-in-picture"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="strict-origin-when-cross-origin"
+      ></iframe>
+    `;
+
+  }else{
+
+    player.innerHTML = `
+      <div class="player-placeholder">
+        <div class="play-icon">▶</div>
+        <strong>Episode ${number} Belum Tersedia</strong>
+        <p>Video episode ini belum ditambahkan.</p>
+      </div>
+    `;
+
+  }
+
+  updateEpisodeControls();
+
+  showPage("watchPage");
+
+}
+
+
+/* ==========================================
+   10. EPISODE NAVIGATION
+========================================== */
+
+function changeEpisode(direction){
+
+  const drama = getDrama(currentDrama);
+
+  if(!drama) return;
+
+  const next = currentEpisode + direction;
+
+  if(next < 1 || next > drama.totalEpisodes) return;
+
+  // Perpindahan episode juga menggunakan
+  // fungsi playEpisode sehingga Direct Link
+  // tetap dipicu saat episode dipilih.
+  playEpisode(next);
+
+}
+
+function updateEpisodeControls(){
+
+  const drama = getDrama(currentDrama);
+
+  if(!drama) return;
+
+  document.getElementById("prevEpisode").disabled =
+    currentEpisode <= 1;
+
+  document.getElementById("nextEpisode").disabled =
+    currentEpisode >= drama.totalEpisodes;
+
+}
+
+function backToDetail(){
+
+  const drama = getDrama(currentDrama);
+
+  if(!drama) return;
+
+  showPage("detailPage");
+
+}
+
+
+/* ==========================================
+   11. SEARCH
+========================================== */
+
+function toggleSearch(){
+
+  const wrap = document.getElementById("searchWrap");
+
+  wrap.classList.toggle("active");
+
+  if(wrap.classList.contains("active")){
+
+    goHome();
+
+    wrap.classList.add("active");
+
+    document.getElementById("searchInput").focus();
+
+  }
+
+}
+
+function searchDramas(){
+
+  const keyword =
+    document.getElementById("searchInput").value
+      .toLowerCase()
+      .trim();
+
+  const filtered = dramas.filter(drama => {
+
+    return (
+      drama.title.toLowerCase().includes(keyword) ||
+      drama.genre.toLowerCase().includes(keyword)
+    );
+
+  });
+
+  renderDramas(filtered);
+
+}
+
+
+/* ==========================================
+   12. INITIALIZE
+========================================== */
+
+renderDramas();
+
+</script>
+
+</body>
+</html>
